@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Stream From YTS</title>
+
+</head>
+
+<body>
+  <a id="play" href="#">play</a>
+  <div  class="hidden" id="playercontainer">
+  <video id="player" poster="" src=""></video>
+  <div id="controls">
+    <div id="progressholder">
+      <div id="buffered"></div>
+      <div id="progress"></div>
+      <div id="progressorb"></div>
+    </div>
+    <div id="playpause" class="fa fa-play"></div>
+    <div id="progresstime">loading...</div>
+    <div id="fullscreen" class="fa fa-arrows-alt"></div>
+  </div>
+</div>
+    <h1>Stream From | <a href="movie_search.html?id=test">YTS</a></h1>
+
+</body>
+
+
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
+</script>
+
+<script>
+var bg= getQueryVariable("bg");
+console.log(bg);
+document.getElementById("player").setAttribute("poster",bg);
+    var WebTorrent = require('webtorrent-hybrid')
+    console.log(getQueryVariable("hash"));
+    console.log(getQueryVariable("title"));
+    var client = new WebTorrent()
+    var torr = "magnet:?xt=urn:btih:" + getQueryVariable("hash") + "&dn=" + getQueryVariable("title") + "&tr=udp://tracker.coppersurfer.tk:6969/announce&tr=udp://tracker.sktorrent.net:6969/announce&tr=udp://tracker.zer0day.to:1337/announce";
+
+    var torrentId = torr;
+    // var torrentf = torrent.magnetURI
+    // console.log(torrentf)
+    client.add(torrentId, function(torrent) {
+        // Torrents can contain many files. Let's use the first.
+        var file = torrent.files
+        torrent.files.forEach(function(file) {
+
+
+            // file.getBlobURL(function (err, url) {
+            //   if (err) throw err
+            //   var a = document.createElement('a');
+            //   a.download = file.name;
+            //   a.href = url;
+            //   a.textContent = 'Download ' + file.name;
+            //   document.body.appendChild(a);
+            //   console.log(url);
+            // })
+
+            if (file.name.endsWith(".mp4")) {
+                // file.appendTo('body')
+                //             file.appendTo('#containerElement', function (err, elem) {
+                //   if (err) throw err // file failed to download or display in the DOM
+                //   // console.log('New DOM node with the content', elem)
+                //
+                // })
+                var videoElement = document.getElementById("player");
+                file.renderTo(videoElement, function(err, elem) {})
+
+
+            } else {
+                console.log('Diffrent source type')
+            }
+
+
+        })
+
+        // Display the file by adding it to the DOM.
+        // Supports video, audio, image files, and more!
+        // torrent.files.forEach(function(file){
+        // do something with file
+        // console.log(file.name);
+
+
+        //  })
+
+        //  console.log(file["name"])
+    })
+
+</script>
+<script>	window.$ = window.jQuery = require('./jQuery.js');
+</script>
+<script>
+  $(document).ready(function(){
+
+    $("#play").click(function(){
+      $("#playercontainer").removeClass("hidden")
+      player.play();
+      $("#playpause").attr("class", "fa fa-pause");
+  });
+  })
+</script>
+<script src="js/index.js"></script>
+
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+
+</html>

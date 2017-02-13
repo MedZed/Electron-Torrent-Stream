@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script
+      src="https://code.jquery.com/jquery-3.1.1.js"
+      integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+      crossorigin="anonymous">
+      </script>
+<script>
+
+function ajax_get_json(){
+	var results = document.getElementById("results");
+    var hr = new XMLHttpRequest();
+    hr.open("GET", "ytslist.json", true);
+    hr.setRequestHeader("Content-type", "application/json", true);
+    hr.onreadystatechange = function() {
+	    if(hr.readyState == 4 && hr.status == 200) {
+		    var data = JSON.parse(hr.responseText);
+			results.innerHTML = "<h1>List of movies from YTS</h1>";
+      i=0;
+			for(var obj in data["data"]["movies"]){
+
+			results.innerHTML += "<img src='"+data["data"]["movies"][i]["medium_cover_image"]+"'<hr /> ";
+      i++;
+
+			}
+	    }
+    }
+    hr.send(null);
+    results.innerHTML = "requesting...";
+}
+</script>
+<title>parser</title>
+<style media="screen">
+  body{text-align:center;
+      background-color: #000000;
+      color:#ffffff;
+      font-family: helvetica;
+    }
+  img{border:5px solid #ffffff;
+      }</style>
+</head>
+<body>
+
+<div id="results"></div>
+<script>ajax_get_json();</script>
+<script>
+$("body").click(function(){
+    $("h1").hide();
+});</script>
+</body>
+</html>

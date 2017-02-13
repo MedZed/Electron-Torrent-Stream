@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script
+        src="https://code.jquery.com/jquery-3.1.1.js"
+        integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+        crossorigin="anonymous">
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  $.getJSON('https://yts.ag/api/v2/list_movies.json', function(data) {
+  //data is the JSON string
+  document.write(JSON.stringify(data));
+});
+  </script>
+  <a href="https://yts.ag/api/v2/list_movies.json">yts_API</a>
+</body>
+</html>

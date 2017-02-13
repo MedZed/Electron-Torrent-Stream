@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function ajax_get_json(){
+	var results = document.getElementById("results");
+    var hr = new XMLHttpRequest();
+    hr.open("GET", "mylist.json", true);
+    hr.setRequestHeader("Content-type", "application/json", true);
+    hr.onreadystatechange = function() {
+	    if(hr.readyState == 4 && hr.status == 200) {
+		    var data = JSON.parse(hr.responseText);
+			results.innerHTML = "";
+			for(var obj in data){
+				results.innerHTML += data[obj].user+" is "+data[obj].age+" and lives in "+data[obj].country+"<hr />";
+			}
+	    }
+    }
+    hr.send(null);
+    results.innerHTML = "requesting...";
+}
+</script>
+<title>parser</title>
+</head>
+<body>
+<div id="results"></div>
+<script>ajax_get_json();</script>
+</body>
+</html>
